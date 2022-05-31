@@ -19,13 +19,20 @@ public class PlayerController : MonoBehaviour
     private int score = 0;
     private bool countScoreState = false;
 
+    private GameObject restartBtn;
+    private GameObject panel;
+
     // Start is called before the first frame update
-    void  Start()
+    void Start()
     {
         // Set to be 30 FPS
         Application.targetFrameRate =  30;
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
+
+        panel = GameObject.Find("Panel");
+        restartBtn = GameObject.Find("RestartButton");
+        restartBtn.SetActive(false);
     }
 
     // FixedUpdate may be called once per frame. See documentation for details.
@@ -83,7 +90,9 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Enemy")) {
             Debug.Log("Collided with Gomba!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Time.timeScale = 0;
+            restartBtn.SetActive(true);
+            panel.SetActive(true);
         }
     }
 

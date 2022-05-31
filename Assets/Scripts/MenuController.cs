@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class MenuController : MonoBehaviour
                 Time.timeScale = 1.0f;
             }
         }
+    }
+
+    public void RestartButtonClicked() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Start is called before the first frame update
