@@ -5,10 +5,9 @@ using UnityEngine;
 public class ConsumableMushroomController : MonoBehaviour
 {
     private Rigidbody2D mushroom;
-
     public float speed;
     private Vector2 velocity;
-    private int moveRight = 1;
+    private int moveRight;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +15,15 @@ public class ConsumableMushroomController : MonoBehaviour
         mushroom = GetComponent<Rigidbody2D>();
         ComputeVelocity();
 
+        // make mushroom spring out of the box
         mushroom.AddForce(Vector2.up * 2, ForceMode2D.Impulse);
+
+        // make mushroom move towards centre initially
+        if (mushroom.position.x < 0) {
+            moveRight = 1;
+        } else {
+            moveRight = -1;
+        }
 
     }
 
