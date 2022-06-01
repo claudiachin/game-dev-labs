@@ -14,13 +14,16 @@ public class PlayerController : MonoBehaviour
     public float upSpeed = 10;
     private bool onGroundState = true;
 
-    public Transform enemyLocation;
-    public Text scoreText;
-    private int score = 0;
-    private bool countScoreState = false;
+    // public Transform enemyLocation;
+    // public Text scoreText;
+    // private int score = 0;
+    // private bool countScoreState = false;
 
     private GameObject restartBtn;
     private GameObject panel;
+
+    private  Animator marioAnimator;
+    private AudioSource marioAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,9 @@ public class PlayerController : MonoBehaviour
         Application.targetFrameRate =  30;
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
+
+        marioAnimator = GetComponent<Animator>();
+        marioAudio = GetComponent<AudioSource>();
 
         panel = GameObject.Find("Panel");
         restartBtn = GameObject.Find("RestartButton");
@@ -52,7 +58,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("space") && onGroundState) {
             marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
             onGroundState = false;
-            countScoreState = true; //check if Gomba is underneath
+            // countScoreState = true; //check if Gomba is underneath
         }
     }
 
@@ -62,29 +68,34 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("a") && faceRightState) {
             faceRightState = false;
             marioSprite.flipX = true;
+
+            if (Mathf.Abs(marioBody.velocity.x) >  1.0) {
+                marioAnimator.SetTrigger("onSkid");
+            }
         }
 
         if (Input.GetKeyDown("d") && !faceRightState) {
             faceRightState = true;
             marioSprite.flipX = false;
-        }
 
-        // when jumping, and Gomba is near Mario and we haven't registered our score
-        if (!onGroundState && countScoreState) {
-            if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f) {
-                countScoreState = false;
-                score++;
-                Debug.Log(score);
+            if (Mathf.Abs(marioBody.velocity.x) >  1.0) {
+                marioAnimator.SetTrigger("onSkid");
             }
         }
 
-    }
+        // // when jumping, and Gomba is near Mario and we haven't registered our score
+        // if (!onGroundState && countScoreState) {
+        //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f) {
+        //         countScoreState = false;
+        //         score++;
+        //         Debug.Log(score);
+        //     }
+        // }
 
-    IEnumerator PauseMario() {
-        for (int i=0; i<5; i++) {
-            marioSprite.flipX = !marioSprite.flipX;
-            yield return new WaitForSeconds(1f);
-        }
+        marioAnimator.SetBool("onGround", onGroundState);
+
+        marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
+
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -97,10 +108,14 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.CompareTag("Ground")) {
+        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacles")) {
             onGroundState = true; // back on ground
-            countScoreState = false; // reset score state
-            scoreText.text = "Score: " + score.ToString();
+            // countScoreState = false; // reset score state
+            // scoreText.text = "Score: " + score.ToString();
         };
+    }
+
+    void PlayJumpSound() {
+        marioAudio.PlayOneShot(marioAudio.clip);
     }
 }
