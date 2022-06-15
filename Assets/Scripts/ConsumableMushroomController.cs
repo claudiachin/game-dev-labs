@@ -9,6 +9,8 @@ public class ConsumableMushroomController : MonoBehaviour
     private Vector2 velocity;
     private int moveRight;
 
+    // private bool collected;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,15 +45,17 @@ public class ConsumableMushroomController : MonoBehaviour
         velocity = new Vector2((moveRight)*speed, 0);
     }
 
-    void  OnBecameInvisible() {
-        Destroy(gameObject);	
-    }
+    // void  OnBecameInvisible() {
+    //     Destroy(gameObject);	
+    // }
 
     void  OnCollisionEnter2D(Collision2D col) {
         // stop mushroom from moving on collision with Player
         if (col.gameObject.CompareTag("Player")) {
             Debug.Log("Player collided with Mushroom!");
             moveRight = 0;
+            // collected = true;
+            this.gameObject.SetActive(false);
         }
 
         // change mushroom direction on collision
@@ -60,4 +64,5 @@ public class ConsumableMushroomController : MonoBehaviour
             moveRight *= -1;
         }
     }
+
 }

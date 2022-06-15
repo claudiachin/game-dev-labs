@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
         panel = GameObject.Find("Panel");
         restartBtn = GameObject.Find("RestartButton");
         restartBtn.SetActive(false);
+
+        // subscribe to player event
+        GameManager.OnPlayerDeath  +=  PlayerDiesSequence;
     }
 
     // FixedUpdate may be called once per frame. See documentation for details.
@@ -96,16 +99,24 @@ public class PlayerController : MonoBehaviour
 
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
 
+        if (Input.GetKeyDown("z")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z,this.gameObject);
+        }
+
+        if (Input.GetKeyDown("x")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.X,this.gameObject);
+        }
+
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("Enemy")) {
-            Debug.Log("Collided with Gomba!");
-            Time.timeScale = 0;
-            restartBtn.SetActive(true);
-            panel.SetActive(true);
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D other) {
+    //     if (other.gameObject.CompareTag("Enemy")) {
+    //         Debug.Log("Collided with Gomba!");
+    //         Time.timeScale = 0;
+    //         restartBtn.SetActive(true);
+    //         panel.SetActive(true);
+    //     }
+    // }
 
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacles")) {
@@ -117,5 +128,13 @@ public class PlayerController : MonoBehaviour
 
     void PlayJumpSound() {
         marioAudio.PlayOneShot(marioAudio.clip);
+    }
+
+    void  PlayerDiesSequence(){
+        // Mario dies
+        Debug.Log("Mario dies");
+        restartBtn.SetActive(true);
+        panel.SetActive(true);
+        GameObject.Find("Mario").SetActive(false);
     }
 }
