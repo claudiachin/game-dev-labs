@@ -19,7 +19,7 @@ public class SpawnManager : MonoBehaviour
 
     void spawnFromPooler(ObjectType i)
     {
-        GameObject item = ObjectPooler.SharedInstance.GePooledObject(i);
+        GameObject item = ObjectPooler.SharedInstance.GetPooledObject(i);
 
         if (item != null)
         {

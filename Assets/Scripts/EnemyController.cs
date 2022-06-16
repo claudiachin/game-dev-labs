@@ -60,6 +60,7 @@ public  class EnemyController : MonoBehaviour
             // check if collides on top
             float yoffset = (other.transform.position.y  -  this.transform.position.y);
             if (yoffset  >  0.75f){
+				Debug.Log("KILLED");
                 KillSelf();
             } else{
                 // hurt player

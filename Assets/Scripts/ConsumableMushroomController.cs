@@ -55,7 +55,7 @@ public class ConsumableMushroomController : MonoBehaviour
             Debug.Log("Player collided with Mushroom!");
             moveRight = 0;
             // collected = true;
-            this.gameObject.SetActive(false);
+            // this.gameObject.SetActive(false);
         }
 
         // change mushroom direction on collision
