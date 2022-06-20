@@ -5,7 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MarioGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Scenes/MarioLevel2.unity
+    guid: c28fd04f12a0c42f9af5f47dd0c4f7ac
+  - enabled: 1
+    path: Assets/Scenes/MarioLevel1EV.unity
+    guid: eafacc21bd17945e9a02479690c85cbc
+  - enabled: 1
+    path: Assets/Scenes/MarioLevel2EV.unity
+    guid: fc38dae4aa3db4122b5d42d44714e530
   m_configObjects: {}

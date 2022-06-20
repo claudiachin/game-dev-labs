@@ -30,7 +30,7 @@ public class BreakObject : MonoBehaviour
             gameObject.transform.parent.GetComponent<SpriteRenderer>().enabled  =  false;
             gameObject.transform.parent.GetComponent<BoxCollider2D>().enabled  =  false;
             GetComponent<EdgeCollider2D>().enabled  =  false;
-            CentralManager.centralManagerInstance.increaseScore();
+            // CentralManager.centralManagerInstance.increaseScore();
         }
     }
 

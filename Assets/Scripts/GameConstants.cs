@@ -33,4 +33,10 @@ public class GameConstants : ScriptableObject
     public int maxOffset = 10;
     public int enemyPatroltime = 5;
     public int groundSurface = -1;
+
+    // for Scriptable Objects Architecture lab
+    public int playerMaxSpeed = 5;
+    public int playerMaxJumpSpeed = 30;
+    public int playerDefaultForce = 300;
+    public  float groundDistance =  -3.6f;
 }
