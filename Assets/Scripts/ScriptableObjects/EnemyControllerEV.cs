@@ -119,7 +119,7 @@ public class EnemyControllerEV : MonoBehaviour
             else
             {
                 // hurt player
-                // onPlayerDeath.Invoke();
+                onPlayerDeath.Invoke();
             }
         }
     }
