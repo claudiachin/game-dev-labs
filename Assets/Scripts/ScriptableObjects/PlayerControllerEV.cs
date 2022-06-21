@@ -75,7 +75,7 @@ public class PlayerControllerEV : MonoBehaviour
 
         if (Input.GetKeyDown("x")){
             // CentralManager.centralManagerInstance.consumePowerup(KeyCode.X,this.gameObject);
-            castEvent.Invoke(KeyCode.W);
+            castEvent.Invoke(KeyCode.X);
         }
     }
 
